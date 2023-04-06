@@ -1,6 +1,7 @@
 //console.log('%c HI', 'color: firebrick')
 const imgUrl = "https://dog.ceo/api/breeds/image/random/4";
 const breedUrl = "https://dog.ceo/api/breeds/list/all";
+let breedsArray = [];
 
 document.addEventListener('DOMContentLoaded', e => {
     //challenge 1
@@ -25,6 +26,9 @@ document.addEventListener('DOMContentLoaded', e => {
             breed.innerText = dog;
             document.getElementById('dog-breeds').append(breed);
         }
+        breedsArray = Array.from(breeds.childNodes)
+        breedsArray.shift();
+        console.log(breedsArray);
     })
 
     //challenge 3
@@ -32,5 +36,26 @@ document.addEventListener('DOMContentLoaded', e => {
     breeds.addEventListener('click', e => {
         e.target.style.color = 'red';
     })
+
+    //challenge 4
+
+    document.getElementById('breed-dropdown').onchange = e => {
+        /*
+        for (breed of breedsArray) {
+            console.log('FIRST LETTER: ' + breed.innerText.charAt(0))
+            console.log('COMPARING TO: ' + document.getElementById('breed-dropdown').value)
+            console.log('RESULT: ' + (breed.innerText.charAt(0) === document.getElementById('breed-dropdown').value))
+        }
+        */
+        let filteredArray = breedsArray.filter(breed => (
+            breed.innerText.charAt(0) === document.getElementById('breed-dropdown').value
+        ))
+
+        document.getElementById('dog-breeds').innerHTML = '';
+        for (item of filteredArray){
+            let breed = document.createElement('li');
+            breed.innerText = item.innerText;
+            document.getElementById('dog-breeds').append(breed);
+        }
     }
-)
+})
